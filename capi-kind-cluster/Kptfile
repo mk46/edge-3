@@ -1,0 +1,26 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata: # kpt-merge: /capi-kind-cluster
+  name: capi-kind-cluster
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    internal.kpt.dev/upstream-identifier: kpt.dev|Kptfile|default|capi-kind-cluster
+upstream:
+  type: git
+  git:
+    repo: https://github.com/mk46/nephio-example-packages.git
+    directory: cluster-capi-kind
+    ref: cluster-capi-kind/v5
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/mk46/nephio-example-packages.git
+    directory: cluster-capi-kind
+    ref: cluster-capi-kind/v5
+    commit: 41834f3ae91eb434e5f439ddcfc1a6ffcd248178
+info:
+  description: "This package provides a blueprint for deploying a capi cluster using the capi kind docker templates"
+pipeline:
+  mutators:
+  - image: gcr.io/kpt-fn/apply-replacements:v0.1.1
+    configPath: apply-replacements.yaml
